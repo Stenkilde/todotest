@@ -1,0 +1,12 @@
+.App {
+    text-align: center;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+}
+
+.item {
+    list-style-type: none;
+}
