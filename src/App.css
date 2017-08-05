@@ -10,3 +10,7 @@
 .item {
     list-style-type: none;
 }
+
+.completed {
+    background: tomato;
+}

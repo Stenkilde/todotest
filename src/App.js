@@ -7,24 +7,42 @@ class App extends Component {
 		super();
 
 		this.state = {
-			todos: [
-				{
-					id: 1,
-					title: "Make React App",
-					completed: false
-				},
-				{
-					id: 2,
-					title: "Add backend service",
-					completed: false
-				},
-				{
-					id: 3,
-					title: "Be Awesome!",
-					completed: true
-				}
-			]
+			todos: [],
+			completed: []
 		}
+	}
+
+	componentDidMount() {
+		const _API_ = [
+			{
+				id: 1,
+				title: "Make React App",
+				completed: false
+			},
+			{
+				id: 2,
+				title: "Add backend service",
+				completed: false
+			},
+			{
+				id: 3,
+				title: "Be Awesome!",
+				completed: true
+			}
+		]
+
+		const arrayNonCompleted = _API_.filter((item) => {
+			return item.completed === false
+		});
+
+		const arrayCompleted = _API_.filter((item) => {
+			return item.completed === true
+		});
+
+		this.setState({
+			todos: arrayNonCompleted,
+			completed: arrayCompleted
+		})
 	}
 
 	handleClick(todo) {
@@ -48,6 +66,20 @@ class App extends Component {
 								return (
 									<li onClick={() => this.handleClick(todo)} 
 										className="item"
+										key={index}>
+										{todo.title}
+									</li>
+								);
+							})
+						);
+					})()}
+
+					{(() => {
+						return (
+							this.state.completed.map((todo, index) => {
+								return (
+									<li onClick={() => this.handleClick(todo)} 
+										className="item completed"
 										key={index}>
 										{todo.title}
 									</li>
