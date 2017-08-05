@@ -46,13 +46,39 @@ class App extends Component {
 	}
 
 	handleClick(todo) {
+		todo.completed = true;
+
 		const newArray = this.state.todos.filter((item) => {
 			return item !== todo;
 		})
 
+		const completedArray = this.state.completed;
+		completedArray.push(todo);
+
 		this.setState({
-			todos: newArray
+			todos: newArray,
+			completed: completedArray
 		})
+	}
+
+	handleDelete(todo, state) {
+		if (state === 'todo') {
+			const newArray = this.state.todos.filter((item) => { 
+				return item !== todo 
+			})
+
+			this.setState({
+				todos: newArray
+			})
+		} else {
+			const newArray = this.state.completed.filter((item) => {
+				return item !== todo
+			})
+
+			this.setState({
+				completed: newArray
+			})
+		}
 	}
 
 	render() {
@@ -64,24 +90,25 @@ class App extends Component {
 						return (
 							this.state.todos.map((todo, index) => {
 								return (
-									<li onClick={() => this.handleClick(todo)} 
-										className="item"
+									<li className="item"
 										key={index}>
-										{todo.title}
+										<span onClick={() => this.handleClick(todo)}>{todo.title}</span>
+										<button onClick={() => this.handleDelete(todo, 'todo')}>X</button>
 									</li>
 								);
 							})
 						);
 					})()}
-
+					<h2>Completed</h2>
 					{(() => {
 						return (
 							this.state.completed.map((todo, index) => {
 								return (
-									<li onClick={() => this.handleClick(todo)} 
+									<li 
 										className="item completed"
 										key={index}>
 										{todo.title}
+										<button onClick={() => this.handleDelete(todo, 'done')}>X</button>
 									</li>
 								);
 							})
